@@ -11,13 +11,10 @@ type Movie = {
 } | null
 
 function SessionPage() {
-  const [count, setCount] = useState(0)
   const wsRef = useRef<WebSocket>(null)
-  const inputRef = useRef<HTMLInputElement>(null);
   const [sessionId , setSessionId] = useState("")
   const [movies, setMovies] = useState([])
   const sessId = useParams()
-  const [showPopup, setShowPopup] = useState(false);
   const [matchedMovie , setMatchedMovie] = useState<Movie>(null)
 
   const swipeRight = (sessionId : string , movie : Movie) => {
@@ -88,7 +85,7 @@ function SessionPage() {
         </div>
 
       <div className='mt-20'>
-        <ReactTinderCard characters={movies} onSwipeRight = {(movie) => {
+        <ReactTinderCard characters={movies} onSwipeRight = {(movie : Movie) => {
           swipeRight(sessionId , movie)
         }}/>
       </div>

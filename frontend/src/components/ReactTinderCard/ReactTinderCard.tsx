@@ -2,12 +2,12 @@ import TinderCard from 'react-tinder-card'
 import { useState, useEffect } from 'react'
 import './TinderCards.css'
 
-
+//@ts-ignore
 function ReactTinderCard({characters , onSwipeRight}){
-  const [lastDirection, setLastDirection] = useState()
+  const [lastDirection, setLastDirection] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const swiped = (direction, nameToDelete , index) => {
+  const swiped = (direction : string, nameToDelete : string , index : number) => {
     console.log('removing: ' + nameToDelete)
     setLastDirection(direction)
     setCurrentIndex(index - 1)
@@ -28,7 +28,7 @@ function ReactTinderCard({characters , onSwipeRight}){
     }
   }, [characters])
 
-  const outOfFrame = (name) => {
+  const outOfFrame = (name : string) => {
     console.log(name + ' left the screen!')
   }
 
@@ -37,7 +37,8 @@ function ReactTinderCard({characters , onSwipeRight}){
       <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
       <div className='cardContainer'>
-        {characters.map((character, index) =>
+        {//@ts-ignore
+        characters.map((character, index : number) =>
           <TinderCard className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name , index)} onCardLeftScreen={() => outOfFrame(character.name)}>
             <div style={{ backgroundImage: 'url(' + `https://image.tmdb.org/t/p/w500${character.poster_path}` + ')' }} className='card'>
             </div>
