@@ -51,7 +51,7 @@ function ReactTinderCard({characters , onSwipeRight}){
       {currentIndex >= 0 && (
         <div className="text-center mt-20 max-w-200 ml-15">
           <h2 className="text-xl font-semibold">{characters[currentIndex]?.title}</h2>
-          <h3 className="text-xl font-semibold">{characters[currentIndex]?.overview}</h3>
+          <h3 className="mt-2 text-md font-normal max-h-32 overflow-hidden text-ellipsis line-clamp-3">{characters[currentIndex]?.overview}</h3>
         </div>
       )}
       

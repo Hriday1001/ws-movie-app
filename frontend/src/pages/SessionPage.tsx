@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import ReactTinderCard from '../components/ReactTinderCard/ReactTinderCard'
-import axios from 'axios'
 import { useParams } from 'react-router-dom'
 // import "./App.css"
 
@@ -11,9 +10,9 @@ type Movie = {
 } | null
 
 function SessionPage() {
-  const wsRef = useRef<WebSocket>(null)
+  const wsRef = useRef<WebSocket | null>(null)
   const [sessionId , setSessionId] = useState("")
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState<Movie[]>([])
   const sessId = useParams()
   const [matchedMovie , setMatchedMovie] = useState<Movie>(null)
 
@@ -25,9 +24,20 @@ function SessionPage() {
     }))
   }
 
+  const shuffle = (array: Movie[]) => {
+    let currentIndex = array.length, randomIndex
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex--
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+    }
+
+    return array
+  }
+
   useEffect(()=>{
-    const ws = new WebSocket("ws://localhost:8080")
-    // const sessionId = generateToken()
+    const ws = new WebSocket("wss://ws-movie-app.onrender.com");
     setSessionId(sessId.sessionId as string)
 
     ws.onopen = () => {
@@ -44,32 +54,16 @@ function SessionPage() {
         console.log(data.movie )
         setMatchedMovie(data.movie)
       }
-    }
 
-    // wsRef.current = ws
-
-    const fetchMovies = async () => {
-      try {
-        console.log(import.meta.env.VITE_TMDB_API_KEY)
-        const res = await axios.get(
-          'https://api.themoviedb.org/3/discover/movie',
-          {
-            params: {
-              api_key: import.meta.env.VITE_TMDB_API_KEY,
-              with_original_language: 'hi',
-              sort_by: 'popularity.desc',
-              with_watch_providers: '8|2336|119',
-              watch_region: 'IN',
-            },
-          }
-        )
-        setMovies(res.data.results)
-      } catch (err) {
-        console.error('Error fetching movies:', err)
+      if (data.type === "sessionMovies") {
+        const shuffled = shuffle(data.movies);
+        setMovies(shuffled);
+        console.log(shuffled)
+        // setCurrentIndex(0);
       }
     }
 
-    fetchMovies()
+    wsRef.current = ws
 
     return ()=>{
       ws.close()
