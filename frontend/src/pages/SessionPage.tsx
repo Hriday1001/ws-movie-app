@@ -30,14 +30,17 @@ function SessionPage() {
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex)
       currentIndex--
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
     }
 
     return array
   }
 
   useEffect(()=>{
-    const ws = new WebSocket("wss://ws-movie-app.onrender.com");
+    const ws = new WebSocket("ws://localhost:8080");
     setSessionId(sessId.sessionId as string)
 
     ws.onopen = () => {
