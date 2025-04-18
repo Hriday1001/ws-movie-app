@@ -25,19 +25,8 @@ function SessionPage() {
   }
 
   const shuffle = (array: Movie[]) => {
-    let currentIndex = array.length, randomIndex
-
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex--
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array
-  }
+    return [...array].sort(() => Math.random() - 0.5);
+  };
 
   useEffect(()=>{
     const ws = new WebSocket("wss://ws-movie-app.onrender.com");
