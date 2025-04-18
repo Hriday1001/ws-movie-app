@@ -46,7 +46,7 @@ function SessionPage() {
       }
     }
 
-    wsRef.current = ws
+    // wsRef.current = ws
 
     const fetchMovies = async () => {
       try {
