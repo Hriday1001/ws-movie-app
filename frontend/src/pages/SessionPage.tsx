@@ -40,7 +40,7 @@ function SessionPage() {
   }
 
   useEffect(()=>{
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("wss://ws-movie-app.onrender.com");
     setSessionId(sessId.sessionId as string)
 
     ws.onopen = () => {
