@@ -49,14 +49,14 @@ async function fetchMoviesForSession(): Promise<Movie[]> {
 
     console.log(API_KEY)
 
-    const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc&with_watch_providers=8|2336|119&watch_region=IN&primary_release_date.gte=2010-01-01`);
+    const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc&with_watch_providers=8|2336|119&watch_region=IN&primary_release_date.gte=2020-01-01`);
     const data = await res.json();
     const totalPages = data.total_pages
     console.log(totalPages)
 
     for (let page = 0; page < totalReqPages; page++) {
         const pageNo = Math.floor(Math.random() * totalPages) + 1
-        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc&with_watch_providers=8|2336|119&watch_region=IN&primary_release_date.gte=2010-01-01&page=${pageNo}`);
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc&with_watch_providers=8|2336|119&watch_region=IN&primary_release_date.gte=2020-01-01&page=${pageNo}`);
         const data = await res.json();
         if (data?.results) {
             allMovies.push(...data.results);
